@@ -136,8 +136,19 @@ function comprobarResaltados () {
 }
 
 function dibujarSol () {
-	ctx.shadowBlur = 10;
+	ctx.shadowBlur = 100;
 	ctx.shadowColor = "#fff";
+
+	var grad = ctx.createRadialGradient(CANVAS.width/2,CANVAS.height/2,5,CANVAS.width/2,CANVAS.height/2,150);
+	grad.addColorStop(0, 'rgba(255,255,107,0.5)');
+	grad.addColorStop(0.5, 'rgba(255,255,255,0.15)');
+	grad.addColorStop(1, 'rgba(255,255,107,0.01)');
+	
+	ctx.beginPath();
+	ctx.arc(CANVAS.width/2, CANVAS.height/2,150, 0, 2 * Math.PI);
+	ctx.fillStyle = grad;
+	ctx.fill();
+
 	ctx.beginPath();
 	ctx.arc(CANVAS.width/2, CANVAS.height/2,15, 0, 2 * Math.PI);
 	ctx.fillStyle = "rgba(255, 255, 150, 0.8)";
