@@ -84,15 +84,15 @@ function iterar() {
 	grados = 0;
 	if(img_mutex == 0){
 		setInterval(function(){
-			if(grados >= 360){
-				grados = grados%360;
+			if(grados <= 360){
+				grados += 360;
 			}
 			adjustCanvasResolution();
 			girar(PLANETA1, grados);
 			girar(PLANETA2, grados+180);
 			dibujar();
 			
-			grados += 1;
+			grados -= 1;
 		},50);
 		
 	}
@@ -108,7 +108,7 @@ function adjustCanvasResolution () {
 
 function girar(planeta, grados) {
 	var rad=Math.PI/180;
-	var theta = -10*rad;
+	var theta = 170*rad;
 	var rx = (0.4966641957005189 - 0.3291326908821349) * CANVAS.width;
 	var ry = (0.5007194244604316 - 0.3107913669064748) * CANVAS.height;
 	var a = grados;
