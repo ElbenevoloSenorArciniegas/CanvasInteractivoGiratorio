@@ -113,7 +113,7 @@ function girar(planeta) {
 		planeta.abajo *= -1;
 	}
 
-	planeta.x += planeta.derecha * 2;
+	planeta.x += planeta.derecha * 2.5;
 	planeta.y += planeta.abajo * 1;
 }
 
