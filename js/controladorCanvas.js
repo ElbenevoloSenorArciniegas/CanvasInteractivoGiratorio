@@ -2,6 +2,8 @@ CANVAS = null;
 ctx= null;
 img_mutex = -3;
 
+mouseX =0;
+mouseY =0;
 
 /*
 =====================================================================================================
@@ -13,12 +15,17 @@ function cargar(){
 
 		// Add event listener for `click` events.
 		CANVAS.addEventListener('click', function(event) {
-		    var x = event.pageX - CANVAS.offsetLeft + CANVAS.clientLeft,
-		        y = event.pageY - CANVAS.offsetTop + CANVAS.clientTop;
-		        if(!probarClick(PLANETA1,x,y)){
-		        	probarClick(PLANETA2,x,y)
+		        if(esEstePlaneta(PLANETA1)){
+		        	alert("Saludos de parte del planeta "+PLANETA1.nombre);
+		        }else if(esEstePlaneta(PLANETA2)){
+		        	alert("Saludos de parte del planeta "+PLANETA2.nombre);
 		        }
 		}, false);
+
+		CANVAS.addEventListener("mousemove", function(event) {
+		    mouseX = event.pageX - CANVAS.offsetLeft + CANVAS.clientLeft;
+		    mouseY = event.pageY - CANVAS.offsetTop + CANVAS.clientTop;
+		});
 		
 	
 		FONDO = new Image();
@@ -91,7 +98,8 @@ function iterar() {
 			girar(PLANETA1, grados);
 			girar(PLANETA2, grados+180);
 			dibujar();
-			
+			comprobarResaltados();
+
 			grados -= 1;
 		},50);
 		
@@ -112,16 +120,37 @@ function girar(planeta, grados) {
 	var rx = (0.4966641957005189 - 0.3291326908821349) * CANVAS.width;
 	var ry = (0.5007194244604316 - 0.3107913669064748) * CANVAS.height;
 	var a = grados;
-	planeta.x = CANVAS.width/2 + rx*Math.cos(a*rad)*Math.cos(theta) - ry*Math.sin(a*rad)*Math.sin(theta) - PLANETA2.w/2;
-	planeta.y = CANVAS.height/2 + rx*Math.cos(a*rad)*Math.sin(theta) +	ry*Math.sin(a*rad)*Math.cos(theta) - 5*PLANETA2.h/8;
+	planeta.x = CANVAS.width/2 + rx*Math.cos(a*rad)*Math.cos(theta) - ry*Math.sin(a*rad)*Math.sin(theta) - planeta.w/2;
+	planeta.y = CANVAS.height/2 + rx*Math.cos(a*rad)*Math.sin(theta) +	ry*Math.sin(a*rad)*Math.cos(theta) - 5*planeta.h/8;
 }
 
-
-function probarClick (planeta, clickX, clickY) {
-	if (clickY > planeta.y && clickY < planeta.y + planeta.h && clickX > planeta.x && clickX < planeta.x + planeta.w) {
-        alert("Saludos de parte del planeta "+planeta.nombre);
-    	return true;
+function comprobarResaltados () {
+	if(esEstePlaneta(PLANETA1)){
+    	agregarResaltado(PLANETA1);
+    }else if(esEstePlaneta(PLANETA2)){
+    	agregarResaltado(PLANETA2);
+    }else{
+    	CANVAS.style.cursor = "initial";
     }
-    return false;
 }
 
+function agregarResaltado (planeta) {
+	ctx.shadowColor = 'yellow';
+	ctx.shadowBlur = 8;
+	ctx.beginPath();
+	ctx.arc(planeta.x + planeta.w/2, planeta.y + 5*planeta.h/8, 100, 0, 2 * Math.PI);
+	ctx.lineWidth = 15;
+	ctx.strokeStyle = "rgba(255, 255, 0, .1)";
+	ctx.stroke();
+
+	ctx.font = "30px Comic Sans MS";
+	ctx.fillStyle = "yellow";
+	ctx.textAlign = "center";
+	ctx.fillText(planeta.nombre, planeta.x + planeta.w/2, planeta.y + planeta.h + 20);
+	
+	CANVAS.style.cursor = "pointer";
+}
+
+function esEstePlaneta (planeta) {
+	return (mouseY > planeta.y && mouseY < planeta.y + planeta.h && mouseX > planeta.x && mouseX < planeta.x + planeta.w)
+}
