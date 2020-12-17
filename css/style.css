@@ -12,7 +12,11 @@ header{
 .canvas-container{
 	margin: auto;
 	width: 100%;
+<<<<<<< HEAD
 	height: 79%
+=======
+	height: 100%
+>>>>>>> 0c8ac3b72163ce30a76b5555c46107c81bed7a70
 }
 
 canvas{

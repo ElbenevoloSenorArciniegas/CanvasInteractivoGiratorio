@@ -22,28 +22,28 @@ function cargar(){
 		
 	
 		FONDO = new Image();
-		FONDO.src = "https://i.ibb.co/b70KP25/fondo-min-min.jpg"
+		FONDO.src = "css/img/universe.png"
 		FONDO.onload = function () {
 			img_mutex++;
 			iterar();
 		}
 
 		PLANETA1 = {
-			nombre : "Troll",
-			w : 75,
-			h : 75,
+			nombre : "Training Center High School",
+			w : 200,
+			h : 200,
 			x : 0,
 			y : 0,
 			abajo : 1,
 			derecha : 1
 		}
-		PLANETA1.x = CANVAS.width/4 + PLANETA1.w/2;
+		PLANETA1.x = CANVAS.width/5.6 + PLANETA1.w/2;
 		PLANETA1.y = CANVAS.height/2 - PLANETA1.h/2;
 		PLANETA1_IMG = new Image();
 		PLANETA1_IMG.onclick = function() {
 			alert(PLANETA1.nombre);
 		}
-		PLANETA1_IMG.src = "https://i.ibb.co/wJLHw3T/troll.jpg";
+		PLANETA1_IMG.src = "css/img/planetTCHS.png";
 		PLANETA1_IMG.onload = function () {
 			img_mutex++;
 			iterar();
@@ -51,24 +51,25 @@ function cargar(){
 
 
 		PLANETA2 = {
-			nombre : "Lol",
-			w : 75,
-			h : 75,
+			nombre : "Training Center University",
+			w : 200,
+			h : 200,
 			x : 0,
 			y : 0,
 			abajo : -1,
 			derecha : -1
 		}
-		PLANETA2.x = 3 * CANVAS.width/4 - PLANETA2.w/2 ;
-		PLANETA2.y = CANVAS.height/2 - PLANETA2.h/2;
+		PLANETA2.x = 2.6 * CANVAS.width/4 - PLANETA2.w/2 ;
+		PLANETA2.y = CANVAS.height/2.7 - PLANETA2.h/2;
 		PLANETA2_IMG = new Image();
 		PLANETA2_IMG.onclick = function() {
 			alert(PLANETA2.nombre);
 		}
-		PLANETA2_IMG.src = "https://i.ibb.co/FYd3KLW/lol.jpg";
+		PLANETA2_IMG.src = "css/img/planetTCU.png";
 		PLANETA2_IMG.onload = function () {
 			img_mutex++;
 			iterar();
+			
 		}
 }
 /*
@@ -89,11 +90,12 @@ function iterar() {
 		setInterval(function(){
 
 			adjustCanvasResolution();
-
 			girar(PLANETA1);
 			girar(PLANETA2);
 			dibujar();
+			
 		},50);
+		
 	}
 }
 
@@ -106,15 +108,20 @@ function adjustCanvasResolution () {
 }
 
 function girar(planeta) {
-	if(planeta.x >= 3*CANVAS.width/4   || planeta.x <= CANVAS.width/4 ){
+	if(planeta.x >= 3*CANVAS.width/5  || planeta.x <= CANVAS.width/4 ){
 		planeta.derecha *= -1;
 	}
-	if(planeta.y >= 6*CANVAS.height/8  ||  planeta.y <= CANVAS.height/8){
+	if(planeta.y >= 6*CANVAS.height/12 ||  planeta.y <= CANVAS.height/12){
 		planeta.abajo *= -1;
 	}
 
+<<<<<<< HEAD
 	planeta.x += planeta.derecha * 2.5;
+=======
+	planeta.x += planeta.derecha *2;
+>>>>>>> 0c8ac3b72163ce30a76b5555c46107c81bed7a70
 	planeta.y += planeta.abajo * 1;
+
 }
 
 function probarClick (planeta, clickX, clickY) {
