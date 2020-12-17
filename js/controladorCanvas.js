@@ -16,7 +16,7 @@ function cargar(){
 		    var x = event.pageX - CANVAS.offsetLeft + CANVAS.clientLeft,
 		        y = event.pageY - CANVAS.offsetTop + CANVAS.clientTop;
 		        if(!probarClick(PLANETA1,x,y)){
-		        	probarClick(PLANETA2,x,y);
+		        	probarClick(PLANETA2,x,y)
 		        }
 		}, false);
 		
@@ -28,6 +28,7 @@ function cargar(){
 			iterar();
 		}
 
+		//0.3291326908821349   0.5928057553956835
 		PLANETA1 = {
 			nombre : "Training Center High School",
 			w : 200,
@@ -37,19 +38,16 @@ function cargar(){
 			abajo : 1,
 			derecha : 1
 		}
-		PLANETA1.x = CANVAS.width/5.6 + PLANETA1.w/2;
-		PLANETA1.y = CANVAS.height/2 - PLANETA1.h/2;
+		PLANETA1.x = 0.3291326908821349*CANVAS.width - PLANETA1.w/2;
+		PLANETA1.y = 0.5928057553956835*CANVAS.height - 5*PLANETA1.h/8;
 		PLANETA1_IMG = new Image();
-		PLANETA1_IMG.onclick = function() {
-			alert(PLANETA1.nombre);
-		}
 		PLANETA1_IMG.src = "css/img/planetTCHS.png";
 		PLANETA1_IMG.onload = function () {
 			img_mutex++;
 			iterar();
 		}
 
-
+		//0.6723498888065234   0.4316546762589928
 		PLANETA2 = {
 			nombre : "Training Center University",
 			w : 200,
@@ -59,12 +57,9 @@ function cargar(){
 			abajo : -1,
 			derecha : -1
 		}
-		PLANETA2.x = 2.6 * CANVAS.width/4 - PLANETA2.w/2 ;
-		PLANETA2.y = CANVAS.height/2.7 - PLANETA2.h/2;
+		PLANETA2.x = 0.6723498888065234*CANVAS.width - PLANETA2.w/2;
+		PLANETA2.y = 0.4316546762589928*CANVAS.height - 5*PLANETA2.h/8;
 		PLANETA2_IMG = new Image();
-		PLANETA2_IMG.onclick = function() {
-			alert(PLANETA2.nombre);
-		}
 		PLANETA2_IMG.src = "css/img/planetTCU.png";
 		PLANETA2_IMG.onload = function () {
 			img_mutex++;
@@ -86,14 +81,18 @@ function dibujar(){
 
 function iterar() {
 	//Si ya se cargaron las imágenes, hágale con confianza, al infinito y más allá
+	grados = 0;
 	if(img_mutex == 0){
 		setInterval(function(){
-
+			if(grados >= 360){
+				grados = grados%360;
+			}
 			adjustCanvasResolution();
-			girar(PLANETA1);
-			girar(PLANETA2);
+			girar(PLANETA1, grados);
+			girar(PLANETA2, grados+180);
 			dibujar();
 			
+			grados += 1;
 		},50);
 		
 	}
@@ -107,22 +106,16 @@ function adjustCanvasResolution () {
    }
 }
 
-function girar(planeta) {
-	if(planeta.x >= 3*CANVAS.width/5  || planeta.x <= CANVAS.width/4 ){
-		planeta.derecha *= -1;
-	}
-	if(planeta.y >= 6*CANVAS.height/12 ||  planeta.y <= CANVAS.height/12){
-		planeta.abajo *= -1;
-	}
-
-<<<<<<< HEAD
-	planeta.x += planeta.derecha * 2.5;
-=======
-	planeta.x += planeta.derecha *2;
->>>>>>> 0c8ac3b72163ce30a76b5555c46107c81bed7a70
-	planeta.y += planeta.abajo * 1;
-
+function girar(planeta, grados) {
+	var rad=Math.PI/180;
+	var theta = -10*rad;
+	var rx = (0.4966641957005189 - 0.3291326908821349) * CANVAS.width;
+	var ry = (0.5007194244604316 - 0.3107913669064748) * CANVAS.height;
+	var a = grados;
+	planeta.x = CANVAS.width/2 + rx*Math.cos(a*rad)*Math.cos(theta) - ry*Math.sin(a*rad)*Math.sin(theta) - PLANETA2.w/2;
+	planeta.y = CANVAS.height/2 + rx*Math.cos(a*rad)*Math.sin(theta) +	ry*Math.sin(a*rad)*Math.cos(theta) - 5*PLANETA2.h/8;
 }
+
 
 function probarClick (planeta, clickX, clickY) {
 	if (clickY > planeta.y && clickY < planeta.y + planeta.h && clickX > planeta.x && clickX < planeta.x + planeta.w) {
@@ -131,3 +124,4 @@ function probarClick (planeta, clickX, clickY) {
     }
     return false;
 }
+
