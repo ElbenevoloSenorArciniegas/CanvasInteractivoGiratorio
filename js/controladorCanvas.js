@@ -38,8 +38,8 @@ function cargar(){
 		//0.3291326908821349   0.5928057553956835
 		PLANETA1 = {
 			nombre : "Training Center High School",
-			w : 200,
-			h : 200,
+			w : 150,
+			h : 150,
 			x : 0,
 			y : 0,
 			abajo : 1,
@@ -57,8 +57,8 @@ function cargar(){
 		//0.6723498888065234   0.4316546762589928
 		PLANETA2 = {
 			nombre : "Training Center University",
-			w : 200,
-			h : 200,
+			w : 150,
+			h : 150,
 			x : 0,
 			y : 0,
 			abajo : -1,
@@ -98,6 +98,7 @@ function iterar() {
 			girar(PLANETA1, grados);
 			girar(PLANETA2, grados+180);
 			dibujar();
+			dibujarSol();
 			comprobarResaltados();
 
 			grados -= 1;
@@ -134,19 +135,28 @@ function comprobarResaltados () {
     }
 }
 
+function dibujarSol () {
+	ctx.shadowBlur = 10;
+	ctx.shadowColor = "#fff";
+	ctx.beginPath();
+	ctx.arc(CANVAS.width/2, CANVAS.height/2,15, 0, 2 * Math.PI);
+	ctx.fillStyle = "rgba(255, 255, 150, 0.8)";
+	ctx.fill();
+}
+
 function agregarResaltado (planeta) {
-	ctx.shadowColor = 'yellow';
-	ctx.shadowBlur = 8;
 	ctx.beginPath();
 	ctx.arc(planeta.x + planeta.w/2, planeta.y + 5*planeta.h/8, 100, 0, 2 * Math.PI);
 	ctx.lineWidth = 15;
-	ctx.strokeStyle = "rgba(255, 255, 0, .1)";
+	ctx.strokeStyle = "rgba(255, 255, 0, .2)";
 	ctx.stroke();
 
+	ctx.shadowBlur = 10;
+	ctx.shadowColor = "#000";
 	ctx.font = "30px Comic Sans MS";
-	ctx.fillStyle = "yellow";
+	ctx.fillStyle = "rgb(241, 196, 15)";
 	ctx.textAlign = "center";
-	ctx.fillText(planeta.nombre, planeta.x + planeta.w/2, planeta.y + planeta.h + 20);
+	ctx.fillText(planeta.nombre, planeta.x + planeta.w/2, planeta.y + planeta.h + 25);
 	
 	CANVAS.style.cursor = "pointer";
 }
