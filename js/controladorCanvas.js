@@ -29,7 +29,7 @@ function cargar(){
 		
 	
 		FONDO = new Image();
-		FONDO.src = "css/img/universe.png"
+		FONDO.src = "css/img/universe2.png"
 		FONDO.onload = function () {
 			img_mutex++;
 			iterar();
